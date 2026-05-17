@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Request</title>
+  <link rel="stylesheet" href="/css/style2.css">
+</head>
+<body>
+  <h1>Submit Help Request</h1>
+
+  <!-- Direct form inside EJS -->
+  <form action="/add-request" method="POST">
+    <label>Name:</label>
+    <input type="text" name="name" required><br><br>
+
+    <label>Location:</label>
+    <input type="text" name="location" required><br><br>
+
+    <label>Type of Need:</label>
+    <select name="type" required>
+      <option value="food">Food</option>
+      <option value="medicine">Medicine</option>
+      <option value="shelter">Shelter</option>
+      <option value="rescue">Rescue</option>
+    </select><br><br>
+
+    <label>Urgency:</label>
+    <select name="urgency">
+      <option value="Critical">Critical</option>
+      <option value="High">High</option>
+      <option value="Normal">Normal</option>
+    </select><br><br>
+
+    <button type="submit">Submit Request</button>
+  </form>
+</body>
+</html>

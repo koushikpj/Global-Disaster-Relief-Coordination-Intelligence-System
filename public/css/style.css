@@ -1,0 +1,71 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: url('/images/g1.png') no-repeat center center fixed;
+  background-size: cover;
+  color: #000; /* black text */
+}
+
+/* Common style for all sections */
+header, nav, .about, footer {
+  background: rgba(173, 216, 230, 0.25);   /* transparent light blue background */
+  border: 2px solid rgba(173, 216, 230, 0.7); /* transparent light blue border */
+  border-radius: 15px;                     /* rounded corners */
+  margin: 20px auto;
+  max-width: 1000px;
+  padding: 20px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);  /* subtle shadow for depth */
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2.5em;
+  color: #000;
+}
+
+header p {
+  font-size: 1.2em;
+  margin-top: 10px;
+  color: #333;
+}
+
+nav {
+  text-align: center;
+}
+
+nav button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  background: #3498db;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+nav button:hover {
+  background: #1f78b4;
+}
+
+.about {
+  text-align: center;
+}
+
+.about h2 {
+  color: #000;
+  margin-bottom: 15px;
+}
+
+.about p {
+  color: #333;
+  line-height: 1.6;
+}
+
+footer {
+  text-align: center;
+  font-size: 0.9em;
+  color: #000;
+}

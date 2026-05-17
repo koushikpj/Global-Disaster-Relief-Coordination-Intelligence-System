@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/style1.css"> <!-- new stylesheet -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- 🔎 Search Bar -->
+  <div class="search-bar">
+    <form method="get" action="/dashboard">
+      <input type="text" name="search" placeholder="Search by name or location">
+      <button type="submit">Search</button>
+    </form>
+  </div>
+
+  <!-- ⬇ Export Button -->
+  <div class="export">
+    <form action="/export-requests" method="GET">
+      <button type="submit">⬇ Export Requests (CSV)</button>
+    </form>
+  </div>
+
+  <div class="container">
+    <h1>📊 Dashboard</h1>
+
+    <!-- Filters -->
+    <div class="filters">
+      <form method="get" action="/dashboard">
+        <label>Type:</label>
+        <select name="type">
+          <option value="">All</option>
+          <option value="food">Food</option>
+          <option value="medicine">Medicine</option>
+          <option value="shelter">Shelter</option>
+          <option value="rescue">Rescue</option>
+        </select>
+
+        <label>Location:</label>
+        <input type="text" name="location">
+
+        <label>Urgency:</label>
+        <select name="urgency">
+          <option value="">All</option>
+          <option value="Critical">Critical</option>
+          <option value="High">High</option>
+          <option value="Normal">Normal</option>
+        </select>
+
+        <button type="submit">Filter</button>
+      </form>
+    </div>
+
+    <!-- Requests -->
+    <div class="grid">
+      <div class="card">
+        <h2>Requests</h2>
+        <table>
+          <tr><th>Name</th><th>Type</th><th>Location</th><th>Urgency</th><th>Status</th><th>Action</th></tr>
+          <% requests.forEach(r => { %>
+            <tr class="<%= r.urgency === 'Critical' ? 'critical-row' : '' %>">
+              <td><%= r.name %></td>
+              <td><%= r.type %></td>
+              <td><%= r.location %></td>
+              <td><%= r.urgency %></td>
+              <td><%= r.status %></td>
+              <td>
+                <% if (r.status !== "Fulfilled") { %>
+                  <form action="/fulfill/<%= r._id %>" method="POST">
+                    <button type="submit">Fulfill</button>
+                  </form>
+                <% } %>
+              </td>
+            </tr>
+          <% }) %>
+        </table>
+      </div>
+
+      <!-- Resources -->
+      <div class="card">
+        <h2>Resources</h2>
+        <table>
+          <tr><th>Volunteer</th><th>Type</th><th>Qty</th><th>Location</th><th>Contact</th></tr>
+          <% resources.forEach(res => { %>
+            <tr>
+              <td><%= res.volunteerName %></td>
+              <td><%= res.type %></td>
+              <td><%= res.quantity %></td>
+              <td><%= res.location %></td>
+              <td><%= res.contact %></td>
+            </tr>
+          <% }) %>
+        </table>
+      </div>
+    </div>
+
+    <!-- Matches -->
+    <div class="card">
+      <h2>Matches</h2>
+      <table>
+        <tr><th>Request</th><th>Resource</th><th>Status</th></tr>
+        <% matches.forEach(m => { %>
+          <tr>
+            <td><%= m.request.name %> (<%= m.request.type %>, <%= m.request.location %>)</td>
+            <td><%= m.resource.volunteerName %> (Qty: <%= m.resource.quantity %>)</td>
+            <td><%= m.status %></td>
+          </tr>
+        <% }) %>
+      </table>
+    </div>
+
+    <!-- Analytics -->
+    <div class="card">
+      <h2>Analytics</h2>
+      <div class="charts">
+        <div class="chart-box large">
+          <canvas id="statsChart"></canvas>
+        </div>
+        <div class="chart-box small">
+          <canvas id="pieChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chart Scripts -->
+  <script>
+    const barCtx = document.getElementById('statsChart').getContext('2d');
+    new Chart(barCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Total Requests', 'Fulfilled', 'Pending'],
+        datasets: [{
+          label: 'Requests Overview',
+          data: [<%= totalRequests %>, <%= fulfilledRequests %>, <%= pendingRequests %>],
+          backgroundColor: ['#2ecc71', '#3498db', '#e74c3c']
+        }]
+      },
+      options: {
+        responsive: false,
+        maintainAspectRatio: false
+      }
+    });
+
+    const pieCtx = document.getElementById('pieChart').getContext('2d');
+    new Chart(pieCtx, {
+      type: 'pie',
+      data: {
+        labels: ['Fulfilled', 'Pending'],
+        datasets: [{
+          data: [<%= fulfilledRequests %>, <%= pendingRequests %>],
+          backgroundColor: ['#2ecc71', '#e74c3c']
+        }]
+      },
+      options: {
+        responsive: false,
+        maintainAspectRatio: false
+      }
+    });
+  </script>
+
+</body>
+</html>
