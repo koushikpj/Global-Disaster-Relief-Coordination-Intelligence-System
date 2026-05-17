@@ -6,9 +6,7 @@ It intelligently matches urgent needs with available resources to ensure faster 
 
 ##  Author
 - **Koushik PJ**  
-- Registration Number: **23ETCS002062**  
-- Subject: **CSI301A – Internship‑2 (2023‑2027, 6th Sem, Sec‑B)**  
-- College: **MS Ramaiah University of Applied Sciences**
+-  **Ramaiah University of Applied Sciences**
 
 ##  Features
 - Post requests for urgent resources (food, medicine, shelter, etc.)
